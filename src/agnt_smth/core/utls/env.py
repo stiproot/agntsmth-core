@@ -14,7 +14,7 @@ class EnvVarProvider:
             return environ[key]
 
         val = self._env(key)
-        if val is None or val == "":
+        if not val:
             return default
 
         return val
