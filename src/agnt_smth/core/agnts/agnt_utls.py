@@ -13,12 +13,8 @@ def create_agent_executor(chain: Runnable, messages_key: Optional[str] = "messag
         log(f"{invoke_chain.__name__} START.")
 
         messages = state[messages_key]
-        # log("MESSAGES:")
-        # pprint.pprint(messages)
 
         output = chain.invoke({"messages": messages})
-        # log("OUTPUT:")
-        # pprint.pprint(output)
 
         messages += [output]
         log(f"{invoke_chain.__name__} END.")
@@ -30,12 +26,8 @@ def should_invoke_tools(state: AgentState):
     log(f"{should_invoke_tools.__name__} START.")
 
     messages = state["messages"]
-    # log("MESSAGES:")
-    # pprint.pprint(messages)
 
     last_message = messages[-1]
-    # log("LAST MESSAGE:")
-    # pprint.pprint(last_message)
 
     log(f"{should_invoke_tools.__name__} END.")
 
@@ -49,8 +41,6 @@ def invoke_tools(state: AgentState, tool_executor):
     log(f"{invoke_tools.__name__} START.")
 
     messages = state["messages"]
-    # log("MESSAGES:")
-    # pprint.pprint(messages)
 
     last_message = messages[-1]
     tool_invocations = []

@@ -1,7 +1,7 @@
 import os
 from typing import List, Dict
 from langchain_core.tools import tool
-from ..utls import log
+from ..utls import log, traverse_folder
 
 
 @tool
@@ -44,23 +44,6 @@ def read_file_contents(file_path: str) -> str:
 
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
-
-
-def traverse_folder(folder_path, ignore_folders):
-
-    log(f"traverse_folder START. folder_path: {folder_path}")
-
-    file_dict = {}
-
-    for root, dirs, files in os.walk(folder_path):
-        dirs[:] = [d for d in dirs if d not in ignore_folders]
-
-        file_dict[root] = files
-
-    log(f"traverse_folder END.")
-
-    return file_dict
-
 
 @tool
 def walk_folder(folder_path: str, ignore_folders: List[str]) -> Dict[str, List[str]]:

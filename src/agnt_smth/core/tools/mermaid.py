@@ -1,8 +1,6 @@
-import os
 from typing import Tuple, Optional
 from langchain_core.tools import tool
-from .sh import run_bash_cmd
-from ..utls import log
+from ..utls import log, exec_sh_cmd
 
 
 @tool
@@ -19,8 +17,8 @@ def validate_mermaid_md(
       Tuple[str, str]: A tuple, with the first value being the validation output and the second the error, if there is one.
     """
 
-    command = f"mmdc -i {file_path} -o {output_file_path or "tmp.md"}"
+    cmd = f"mmdc -i {file_path} -o {output_file_path or "tmp.md"}"
 
-    log(f"validate_mermaid_md START. file_path: {file_path}, command: {command}")
+    log(f"validate_mermaid_md START. file_path: {file_path}, cmd: {cmd}")
 
-    return run_bash_cmd(command)
+    return exec_sh_cmd(cmd)

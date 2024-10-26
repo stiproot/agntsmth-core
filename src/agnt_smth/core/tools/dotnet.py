@@ -1,8 +1,6 @@
-import os
 from typing import Tuple, Optional
 from langchain_core.tools import tool
-from .sh import run_bash_cmd
-from ..utls import log
+from ..utls import log, exec_sh_cmd
 
 
 @tool
@@ -16,8 +14,8 @@ def dotnet_build(proj_path: str) -> Tuple[str, str]:
       Tuple[str, str]: A tuple, with the first value being the build output and the second the error, if there is one.
     """
 
-    command = f"dotnet build {proj_path}"
+    cmd = f"dotnet build {proj_path}"
 
-    log(f"dotnet_build START. proj_path: {proj_path}, command: {command}")
+    log(f"dotnet_build START. proj_path: {proj_path}, cmd: {cmd}")
 
-    return run_bash_cmd(command)
+    return exec_sh_cmd(cmd)
