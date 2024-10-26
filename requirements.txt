@@ -1,3 +1,4 @@
+environs
 langchain
 langchain-community
 langchainhub
