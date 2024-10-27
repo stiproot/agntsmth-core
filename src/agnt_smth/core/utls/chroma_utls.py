@@ -45,6 +45,8 @@ def chunk_embed_and_publish(
     collection_name: str,
     embedding_function: AzureOpenAIEmbeddings,
     chroma_client: chromadb.HttpClient,
+    chunk_size: int = 1500,
+    chunk_overlap: int = 50,
 ):
     vector_store = Chroma(
         embedding_function=embedding_function,
@@ -56,7 +58,7 @@ def chunk_embed_and_publish(
         loader = TextLoader(file_path)
         docs = loader.load()
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=1500, chunk_overlap=50
+            chunk_size=chunk_size, chunk_overlap=chunk_overlap
         )
         doc_splits = text_splitter.split_documents(docs)
 
