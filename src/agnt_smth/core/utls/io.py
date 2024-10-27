@@ -7,7 +7,7 @@ def traverse_folder(
     folder_path: str, ignore_folders: List[str]
 ) -> Dict[str, List[str]]:
 
-    log(f"traverse_folder START. folder_path: {folder_path}")
+    log(f"{traverse_folder.__name__} START. folder_path: {folder_path}")
 
     file_dict = {}
 
@@ -16,6 +16,6 @@ def traverse_folder(
 
         file_dict[root] = files
 
-    log(f"traverse_folder END.")
+    log(f"{traverse_folder.__name__} END.")
 
     return file_dict

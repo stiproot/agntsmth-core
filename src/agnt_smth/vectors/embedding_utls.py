@@ -16,5 +16,7 @@ async def embed_file_system_contents(file_system_path: str) -> Awaitable:
 
     file_tree = traverse_folder(
         folder_path=file_system_path,
-        ignore_folders=[".git", "__pycache__", "node_modules"],
+        ignore_folders=[".git", "__pycache__", "node_modules", "bin", "obj"],
     )
+
+    log(f"file_tree: {file_tree}")

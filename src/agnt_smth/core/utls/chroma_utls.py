@@ -9,7 +9,7 @@ from langchain_text_splitters import (
     CharacterTextSplitter,
     RecursiveCharacterTextSplitter,
 )
-from common.model_factory import EmbeddingFactory
+from .model_factory import EmbeddingFactory
 
 
 class ChromaHttpClientFactory:
@@ -82,4 +82,3 @@ def create_retriever(
     retriever = vector_store.as_retriever()
 
     return retriever
-

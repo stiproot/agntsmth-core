@@ -9,14 +9,15 @@ author = "Simon Stipcich"
 author_email = "stipcich.simon@gmail.com"
 url = "https://github.com/stiproot/agnt-smth"
 license = "MIT"
-keywords = ["python", "package", "lang-chain", "lang-graph" "beta"]
-version = "0.1.5"
+keywords = ["python", "package", "langchain", "langgraph", "agentic", "beta"]
+version = "0.1.8"
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 # dependencies...
 install_requires = [
+    "environs",
     "langchain",
     "langchain-community",
     "langchainhub",
