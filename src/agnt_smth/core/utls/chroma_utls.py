@@ -22,7 +22,7 @@ class ChromaHttpClientFactory:
         port = env.get_env_var("CHROMA_PORT", 8000)
 
         chroma_client = chromadb.HttpClient(
-            settings=Settings(allow_reset=True), host=host, port=port, allow_anonymous_usage=True
+            settings=Settings(allow_reset=True), host=host, port=port
         )
 
         return chroma_client
