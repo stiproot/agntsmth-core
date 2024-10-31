@@ -18,7 +18,7 @@ env = EnvVarProvider()
 
 class ChromaHttpClientFactory:
     @staticmethod
-    def create_with_auth():
+    def create_with_auth_header():
         host = env.get_env_var("CHROMA_HOST", "localhost")
         port = env.get_env_var("CHROMA_PORT", 8000)
         usr = env.get_env_var("CHROMA_USR", "admin")
@@ -34,6 +34,26 @@ class ChromaHttpClientFactory:
 
         return chroma_client
 
+
+    @staticmethod
+    def create_with_auth():
+        host = env.get_env_var("CHROMA_HOST", "localhost")
+        port = env.get_env_var("CHROMA_PORT", 8000)
+        usr = env.get_env_var("CHROMA_USR", "admin")
+        pwd = env.get_env_var("CHROMA_PWD", "admin")
+
+        auth_str = f"{usr}:{pwd}"
+
+        chroma_client = chromadb.HttpClient(
+            settings=Settings(allow_reset=True, chroma_client_auth_provider="chromadb.auth.basic_authn.BasicAuthClientProvider", chroma_client_auth_credentials=auth_str), 
+            host=host, 
+            port=port
+        )
+
+        return chroma_client
+
+
+    @staticmethod
     def create():
         host = env.get_env_var("CHROMA_HOST", "localhost")
         port = env.get_env_var("CHROMA_PORT", 8000)
