@@ -10,14 +10,21 @@ from langchain_text_splitters import (
     RecursiveCharacterTextSplitter,
 )
 from .model_factory import EmbeddingFactory
+from .env import EnvVarProvider
+
+env = EnvVarProvider()
 
 
 class ChromaHttpClientFactory:
     @staticmethod
     def create():
+        host = env.get_env_var("CHROMA_HOST", "locahost")
+        port = env.get_env_var("CHROMA_PORT", 8000)
+
         chroma_client = chromadb.HttpClient(
-            settings=Settings(allow_reset=True), host="localhost", port=8000
+            settings=Settings(allow_reset=True), host=host, port=port
         )
+
         return chroma_client
 
 
