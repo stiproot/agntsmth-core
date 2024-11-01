@@ -114,7 +114,7 @@ def chunk_embed_and_publish(
 
 
 def create_retriever(
-    collection_name, chroma_client, embedding_function: AzureOpenAIEmbeddings
+    collection_name: str, chroma_client: chromadb.HttpClient, embedding_function: AzureOpenAIEmbeddings
 ):
     vector_store = Chroma(
         embedding_function=embedding_function,

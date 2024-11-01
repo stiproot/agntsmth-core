@@ -17,18 +17,23 @@ from ..utls import create_retriever, ChromaHttpClientFactory, log, EmbeddingFact
 class RetrieverFactory:
 
     @staticmethod
-    def create(collection_name: str, **kwargs: Any) -> VectorStoreRetriever:
+    def create(collection_name: str, /, **kwargs: Dict[str, Any]) -> VectorStoreRetriever:
         """
         A vector store retriever factory.
         """
 
-        chroma_client = kwargs.get("chroma_client", ChromaHttpClientFactory.create())
-        embedding_function = kwargs.get("embedding_function", EmbeddingFactory.create())
+        chroma_client = kwargs.get("chroma_client", None)
+        if not chroma_client:
+            chroma_client = ChromaHttpClientFactory.create()
+
+        embedding_function = kwargs.get("embedding_function", None)
+        if not embedding_function:
+            embedding_function = EmbeddingFactory.create()
 
         retriever = create_retriever(
             collection_name=collection_name,
             chroma_client=chroma_client,
-            embedding_function=azure_embedding,
+            embedding_function=embedding_function,
         )
 
         return retriever

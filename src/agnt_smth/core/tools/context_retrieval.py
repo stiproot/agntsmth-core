@@ -30,7 +30,6 @@ class RetrieveAdditionalContextTool(BaseTool):
 
     def __init__(
         self,
-        collection_name: str,
         retriever: VectorStoreRetriever = None,
         /,
         **data: Any,
@@ -41,9 +40,9 @@ class RetrieveAdditionalContextTool(BaseTool):
 
         super().__init__(**data)
 
-        self.retriever = retriever or RetrieverFactory.create(
-            collection_name=collection_name
-        )
+        self.retriever = retriever
+        if self.retriever is None:
+            self.retriever = RetrieverFactory.create(collection_name=kwargs["collection_name"])
 
     def _run(self, query: str) -> str:
         """Use the tool"""
