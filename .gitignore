@@ -8,6 +8,9 @@
 .config/*
 .db/*
 .venv/*
+dist/
+build/
+*.egg-info/
 
 # User-specific files
 *.suo

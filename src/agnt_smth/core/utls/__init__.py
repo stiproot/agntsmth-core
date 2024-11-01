@@ -5,3 +5,4 @@ from .model_factory import *
 from .io import *
 from .sh import *
 from .env import *
+from .retriever_factory import *

@@ -10,7 +10,7 @@ author_email = "stipcich.simon@gmail.com"
 url = "https://github.com/stiproot/agnt-smth"
 license = "MIT"
 keywords = ["python", "package", "langchain", "langgraph", "agentic", "beta"]
-version = "0.1.19"
+version = "0.1.20"
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
