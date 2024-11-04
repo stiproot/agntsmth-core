@@ -108,7 +108,10 @@ def chunk_embed_and_publish(
 
         split_texts = [doc.page_content for doc in doc_splits]
         embeddings = embedding_function.embed_documents(split_texts)
-        ids = [f"{file_path}_{i}" for i in range(len(split_texts))]
+        ids = [f"{file_path}_{i}" for i in range(len(embeddings))]
+
+        if not len(ids):
+            continue
 
         vector_store.add_documents(documents=doc_splits, embeddings=embeddings, ids=ids)
 

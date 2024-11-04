@@ -34,7 +34,7 @@ def build_agnt_with_tools_graph(
     chain = prompt | model
     agent_node = create_agent_executor(chain=chain)
 
-    graph = StateGraph(AgentState)
+    graph = StateGraph(state_type)
 
     graph.add_node(agnt_name, agent_node)
     graph.add_node(
