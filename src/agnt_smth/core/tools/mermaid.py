@@ -17,7 +17,7 @@ def validate_mermaid_md(
       Tuple[str, str]: A tuple, with the first value being the validation output and the second the error, if there is one.
     """
 
-    cmd = f"mmdc -i {file_path} -o {output_file_path or "tmp.md"}"
+    cmd = f"mmdc -i {file_path} -o {output_file_path or 'tmp.md'}"
 
     log(f"validate_mermaid_md START. file_path: {file_path}, cmd: {cmd}")
 
