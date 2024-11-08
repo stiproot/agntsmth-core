@@ -13,16 +13,24 @@ from langchain_text_splitters import (
 from .model_factory import EmbeddingFactory
 from .env import EnvVarProvider
 
+
+DEFAULT_HOST = "localhost"
+DEFAULT_PORT = 8000
+DEFAULT_USR = "admin"
+DEFAULT_PWD = "admin"
+DEFAULT_CHUNK_SIZE = 1500
+DEFAULT_CHUNK_OVERLAP = 50
+
 env = EnvVarProvider()
 
 
 class ChromaHttpClientFactory:
     @staticmethod
     def create_with_auth_header():
-        host = env.get_env_var("CHROMA_HOST", "localhost")
-        port = env.get_env_var("CHROMA_PORT", 8000)
-        usr = env.get_env_var("CHROMA_USR", "admin")
-        pwd = env.get_env_var("CHROMA_PWD", "admin")
+        host = env.get_env_var("CHROMA_HOST", DEFAULT_HOST)
+        port = env.get_env_var("CHROMA_PORT", DEFAULT_PORT)
+        usr = env.get_env_var("CHROMA_USR", DEFAULT_USR)
+        pwd = env.get_env_var("CHROMA_PWD", DEFAULT_PWD)
 
         auth_str = f"{usr}:{pwd}"
         encoded_auth = base64.b64encode(auth_str.encode()).decode()
@@ -37,10 +45,10 @@ class ChromaHttpClientFactory:
 
     @staticmethod
     def create_with_auth():
-        host = env.get_env_var("CHROMA_HOST", "localhost")
-        port = env.get_env_var("CHROMA_PORT", 8000)
-        usr = env.get_env_var("CHROMA_USR", "admin")
-        pwd = env.get_env_var("CHROMA_PWD", "admin")
+        host = env.get_env_var("CHROMA_HOST", DEFAULT_HOST)
+        port = env.get_env_var("CHROMA_PORT", DEFAULT_PORT)
+        usr = env.get_env_var("CHROMA_USR", DEFAULT_USR)
+        pwd = env.get_env_var("CHROMA_PWD", DEFAULT_PWD)
 
         auth_str = f"{usr}:{pwd}"
 
@@ -55,8 +63,8 @@ class ChromaHttpClientFactory:
 
     @staticmethod
     def create():
-        host = env.get_env_var("CHROMA_HOST", "localhost")
-        port = env.get_env_var("CHROMA_PORT", 8000)
+        host = env.get_env_var("CHROMA_HOST", DEFAULT_HOST)
+        port = env.get_env_var("CHROMA_PORT", DEFAULT_PORT)
 
         chroma_client = chromadb.HttpClient(
             settings=Settings(allow_reset=True), host=host, port=port
@@ -89,9 +97,12 @@ def chunk_embed_and_publish(
     collection_name: str,
     embedding_function: AzureOpenAIEmbeddings,
     chroma_client: chromadb.HttpClient,
-    chunk_size: int = 1500,
-    chunk_overlap: int = 50,
+    chunk_size: Optional[int] = None,
+    chunk_overlap: Optional[int] = None,
 ):
+    chunk_size = chunk_size or env.get_env_var("CHUNK_SIZE", DEFAULT_CHUNK_SIZE)
+    chunk_overlap = chunk_overlap or env.get_env_var("CHUNK_OVERLAP", DEFAULT_CHUNK_OVERLAP)
+
     vector_store = Chroma(
         embedding_function=embedding_function,
         client=chroma_client,
