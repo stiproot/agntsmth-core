@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import chromadb
 import uuid
 import base64
