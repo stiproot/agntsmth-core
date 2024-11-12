@@ -1,5 +1,5 @@
 import os
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -42,7 +42,7 @@ def chunk_files(
     file_paths: List[str],
     chunk_size: Optional[int] = None,
     chunk_overlap: Optional[int] = None,
-) -> Dict[str, Dict[Any]]:
+) -> Dict[str, Dict[str, Any]]:
     chunk_size = chunk_size or env.get_env_var("CHUNK_SIZE", DEFAULT_CHUNK_SIZE)
     chunk_overlap = chunk_overlap or env.get_env_var("CHUNK_OVERLAP", DEFAULT_CHUNK_OVERLAP)
 
@@ -62,6 +62,6 @@ def chunk_files(
         if not len(split_texts):
             continue
 
-        chunk_hash[file_path] = {"split_docs": split_docs, "split_texts" split_texts}
+        chunk_hash[file_path] = {"split_docs": split_docs, "split_texts": split_texts}
 
     return chunk_hash
