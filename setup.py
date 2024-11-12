@@ -10,7 +10,7 @@ author_email = "stipcich.simon@gmail.com"
 url = "https://github.com/stiproot/agnt-smth"
 license = "MIT"
 keywords = ["python", "package", "langchain", "langgraph", "agentic", "beta"]
-version = "0.4.1"
+version = "0.5.0"
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
@@ -20,15 +20,11 @@ install_requires = [
     "environs",
     "langchain",
     "langchain-community",
-    "langchainhub",
     "langchain-chroma",
     "langchain-openai",
-    "langchain-huggingface",
     "bs4",
     "chromadb",
-    "sentence-transformers",
     "langgraph",
-    "langsmith",
     "IPython",
     "pydantic",
     "rich",

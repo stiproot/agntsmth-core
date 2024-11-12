@@ -1,11 +1,9 @@
 environs
 langchain
-langchain-community
 langchain-chroma
 langchain-openai
 bs4
 chromadb
-sentence-transformers
 langgraph
 IPython
 pydantic
