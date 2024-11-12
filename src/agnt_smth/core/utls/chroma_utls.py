@@ -6,12 +6,10 @@ from chromadb.config import Settings
 from langchain_chroma import Chroma
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain_community.document_loaders import TextLoader
-from langchain_text_splitters import (
-    CharacterTextSplitter,
-    RecursiveCharacterTextSplitter,
-)
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from .model_factory import EmbeddingFactory
 from .env import EnvVarProvider
+from .io import chunk_files
 
 
 DEFAULT_HOST = "localhost"
@@ -109,22 +107,20 @@ def chunk_embed_and_publish(
         collection_name=collection_name,
     )
 
-    for file_path in file_paths:
-        loader = TextLoader(file_path)
-        docs = loader.load()
-        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=chunk_size, chunk_overlap=chunk_overlap
-        )
-        doc_splits = text_splitter.split_documents(docs)
+    chunked_file_hash = chunk_files(file_paths, chunk_size, chunk_overlap)
 
-        split_texts = [doc.page_content for doc in doc_splits]
+    for file_path in chunked_file_hash:
+
+        split_docs = chunked_file_hash[file_path]["split_docs"]
+        split_texts = chunked_file_hash[file_path]["split_texts"]
+
         embeddings = embedding_function.embed_documents(split_texts)
         ids = [f"{file_path}_{i}" for i in range(len(embeddings))]
 
         if not len(ids):
             continue
 
-        vector_store.add_documents(documents=doc_splits, embeddings=embeddings, ids=ids)
+        vector_store.add_documents(documents=split_docs, embeddings=embeddings, ids=ids)
 
 
 def create_retriever(

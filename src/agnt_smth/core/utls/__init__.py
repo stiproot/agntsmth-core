@@ -6,3 +6,4 @@ from .io import *
 from .sh import *
 from .env import *
 from .retriever_factory import *
+from .hash import *
