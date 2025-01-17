@@ -1,16 +1,16 @@
 from setuptools import setup, find_packages
 
 # metadata...
-name = "agnt_smth"
+name = "agntsmth-core"
 description = (
     "A simple agentic workflow builder framework, ontop of LangChain and LangGraph."
 )
 author = "Simon Stipcich"
 author_email = "stipcich.simon@gmail.com"
-url = "https://github.com/stiproot/agnt-smth"
+url = "https://github.com/stiproot/agntsmth-core"
 license = "MIT"
 keywords = ["python", "package", "langchain", "langgraph", "agentic", "beta"]
-version = "0.5.0"
+version = "0.0.1"
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
@@ -19,7 +19,6 @@ with open("README.md", "r", encoding="utf-8") as f:
 install_requires = [
     "environs",
     "langchain",
-    "langchain-community",
     "langchain-chroma",
     "langchain-openai",
     "bs4",
@@ -35,7 +34,7 @@ setup(
     name=name,
     version=version,
     packages=find_packages(where="src"),
-    package_dir={"agnt_smth": "src/agnt_smth"},
+    package_dir={"agntsmth-core": "src/agntsmth-core"},
     description=description,
     long_description=long_description,
     long_description_content_type="text/markdown",

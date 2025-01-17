@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip uninstall agnt_smth
+pip uninstall agntsmth-core
 
 pip install .
