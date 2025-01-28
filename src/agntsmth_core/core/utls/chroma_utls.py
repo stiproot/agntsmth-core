@@ -5,7 +5,6 @@ import base64
 from chromadb.config import Settings
 from langchain_chroma import Chroma
 from langchain_openai import AzureOpenAIEmbeddings
-from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from .model_factory import EmbeddingFactory
 from .env import EnvVarProvider
