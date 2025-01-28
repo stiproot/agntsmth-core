@@ -10,7 +10,7 @@ author_email = "stipcich.simon@gmail.com"
 url = "https://github.com/stiproot/agntsmth-core"
 license = "MIT"
 keywords = ["python", "package", "langchain", "langgraph", "agentic", "beta"]
-version = "0.1.1"
+version = "0.1.2"
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
