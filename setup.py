@@ -34,7 +34,7 @@ setup(
     name=name,
     version=version,
     packages=find_packages(where="src"),
-    package_dir={"agntsmth-core": "src/agntsmth-core"},
+    package_dir={"agntsmth_core": "src/agntsmth_core"},
     description=description,
     long_description=long_description,
     long_description_content_type="text/markdown",
