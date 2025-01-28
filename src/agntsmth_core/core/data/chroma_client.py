@@ -4,7 +4,6 @@ import uuid
 from chromadb.config import Settings
 from langchain_chroma import Chroma
 from langchain_openai import AzureOpenAIEmbeddings
-from langchain_community.document_loaders import TextLoader
 from ..utls import (
     chunk_embed_and_publish,
     create_retriever,
