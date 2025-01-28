@@ -10,7 +10,7 @@ author_email = "stipcich.simon@gmail.com"
 url = "https://github.com/stiproot/agntsmth-core"
 license = "MIT"
 keywords = ["python", "package", "langchain", "langgraph", "agentic", "beta"]
-version = "0.1.2"
+version = "0.1.3"
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
@@ -21,6 +21,7 @@ install_requires = [
     "langchain",
     "langchain-chroma",
     "langchain-openai",
+    "langchain-community",
     "bs4",
     "chromadb",
     "langgraph",
