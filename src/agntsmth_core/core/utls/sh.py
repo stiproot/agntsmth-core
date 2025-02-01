@@ -1,6 +1,7 @@
 from typing import Tuple
 from langchain_core.tools import tool
 import subprocess
+import logging
 # from .logger_utls import log
 
 
@@ -31,5 +32,5 @@ def exec_sh_cmd(cmd: str) -> Tuple[str, str]:
 
         return output, err
     except subprocess.CalledProcessError as e:
-        log(f"{exec_sh_cmd.__name__} ERROR. cmd: {cmd}, error: {str(e)}")
+        logging.error(f"{exec_sh_cmd.__name__} ERROR. cmd: {cmd}, error: {str(e)}")
         return None, str(e)
