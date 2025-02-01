@@ -4,7 +4,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from .env import EnvVarProvider
-from .logger_utls import log
+# from .logger_utls import log
 
 
 DEFAULT_CHUNK_SIZE = 1500
@@ -17,7 +17,7 @@ def traverse_folder(
     folder_path: str, ignore_folders: List[str], ignore_extensions: List[str] = None
 ) -> Dict[str, List[str]]:
 
-    log(f"{traverse_folder.__name__} START. folder_path: {folder_path}")
+    # log(f"{traverse_folder.__name__} START. folder_path: {folder_path}")
 
     file_dict = {}
 
@@ -33,7 +33,7 @@ def traverse_folder(
 
         file_dict[root] = files
 
-    log(f"{traverse_folder.__name__} END.")
+    # log(f"{traverse_folder.__name__} END.")
 
     return file_dict
 
