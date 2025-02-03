@@ -17,7 +17,7 @@ def create_assistant_agent(llm: AzureChatOpenAI, tools: list, system_message: st
                 " prefix your response with FINAL ANSWER so the team knows to stop."
                 " You have access to the following tools: {tool_names}.\n{system_message}",
             ),
-            MessagesPlaceholder(variable_name="messages"),
+            MessagesPlaceholder(variable_name="message_history"),
         ]
     )
     prompt = prompt.partial(system_message=system_message)
@@ -38,7 +38,7 @@ def create_agent(llm: AzureChatOpenAI, system_message: str, tools: List[Any] = [
                     else ""
                 ),
             ),
-            MessagesPlaceholder(variable_name="messages"),
+            MessagesPlaceholder(variable_name="message_history"),
         ]
     )
     prompt = prompt.partial(system_message=system_message)

@@ -1,7 +1,7 @@
 import pprint
 import functools
 import operator
-from typing import Type, Optional, List
+from typing import Type, Optional, Callable
 
 from langchain_core.tools import Tool
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -13,36 +13,26 @@ from ..agnts import (
     create_agent_executor,
     should_invoke_tools,
     invoke_tools,
-    AgentState,
+    GraphState,
 )
 
 
 def build_agnt_with_tools_graph(
-        sys_prompt: str, 
-        tools: List[Tool], 
-        state_type: Optional[Type] = AgentState, 
+        tools: list[Tool], 
+        invoke_llm_fn: Callable,
+        state_type: Optional[Type] = GraphState, 
         agnt_name: Optional[str] = "agent"
 ):
+    graph = StateGraph(state_type)
 
     tool_executor = ToolExecutor(tools)
 
-    prompt = ChatPromptTemplate.from_messages(
-        [("system", sys_prompt), MessagesPlaceholder(variable_name="messages")]
-    )
-
-    model = ModelFactory.create().bind_tools(tools)
-    chain = prompt | model
-    agent_node = create_agent_executor(chain=chain)
-
-    graph = StateGraph(state_type)
-
-    graph.add_node(agnt_name, agent_node)
+    graph.add_node(agnt_name, invoke_llm_fn)
     graph.add_node(
         "invoke_tools", functools.partial(invoke_tools, tool_executor=tool_executor)
     )
 
     graph.add_edge(START, agnt_name)
-
     graph.add_conditional_edges(
         agnt_name,
         should_invoke_tools,
@@ -51,7 +41,6 @@ def build_agnt_with_tools_graph(
             "continue": END,
         },
     )
-
     graph.add_edge("invoke_tools", agnt_name)
     graph.add_edge(agnt_name, END)
 

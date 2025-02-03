@@ -4,45 +4,47 @@ import logging
 from langchain_core.runnables import Runnable
 from langchain_core.messages import ToolMessage
 from langgraph.prebuilt.tool_executor import ToolExecutor, ToolInvocation
-from .agnt_state import AgentState
+from .agnt_state import GraphState
 from ..utls import log
 
 
-def create_agent_executor(chain: Runnable, messages_key: Optional[str] = "messages"):
-    def invoke_chain(state: AgentState):
+def create_agent_executor(
+    chain: Runnable, messages_key: Optional[str] = "message_history"
+):
+    def invoke_chain(state: GraphState):
         log(f"{invoke_chain.__name__} START.")
 
-        messages = state[messages_key]
+        message_history = state[messages_key]
 
-        output = chain.invoke({"messages": messages})
+        output = chain.invoke({"message_history": message_history})
 
-        messages += [output]
+        message_history += [output]
         log(f"{invoke_chain.__name__} END.")
 
     return invoke_chain
 
 
-def should_invoke_tools(state: AgentState):
+def should_invoke_tools(state: GraphState):
     log(f"{should_invoke_tools.__name__} START.")
 
-    messages = state["messages"]
+    message_history = state["message_history"]
 
-    last_message = messages[-1]
-
-    log(f"{should_invoke_tools.__name__} END.")
+    last_message = message_history[-1]
 
     if last_message.tool_calls:
+        log(f"{should_invoke_tools.__name__} END. invoke_tools!")
         return "invoke_tools"
 
+    log(f"{should_invoke_tools.__name__} END. continue!")
     return "continue"
 
 
-def invoke_tools(state: AgentState, tool_executor):
+def invoke_tools(state: GraphState, tool_executor):
     log(f"{invoke_tools.__name__} START.")
 
-    messages = state["messages"]
+    message_history = state["message_history"]
 
-    last_message = messages[-1]
+    last_message = message_history[-1]
     tool_invocations = []
 
     for tool_call in last_message.tool_calls:
@@ -65,4 +67,4 @@ def invoke_tools(state: AgentState, tool_executor):
 
     log(f"{invoke_tools.__name__} END.")
 
-    return {"messages": tool_messages}
+    return {"message_history": tool_messages}
